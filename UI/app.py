@@ -8,8 +8,10 @@ def select(event):
 
 
 def buttonFonction():
-    askopenfilename()
+    filename.set(askopenfilename(filetypes=FILETYPES))
 
+
+FILETYPES = [("text files", "*.txt")]
 
 # Création de la fenêtre
 window = Tk()
@@ -18,6 +20,11 @@ window.geometry("700x530")
 window.minsize(700, 530)
 window.config(background='#656767')
 
+# frame selection fichiers
+frame_selection_fichier = Frame(
+    window, relief='solid'
+)
+frame_selection_fichier.pack(side=RIGHT)
 # Frame algo
 frame_algo = Frame(
     window, bg="#656767", bd=2, relief='solid')
@@ -44,9 +51,19 @@ choice.pack()
 affichage_hash = Label(frame_algo, text="")
 affichage_hash.pack()
 
-# bouton selection de fichier
-bouton_fichier = Button(window, text="Select Files", command=buttonFonction)
+# bouton selection de fichie et affichage du chemin d'accès
+bouton_fichier = Button(frame_selection_fichier,
+                        text="Select Files", command=buttonFonction)
 bouton_fichier.pack()
+
+filename = StringVar(window)
+
+entry = Entry(frame_selection_fichier, textvariable=filename, width=70)
+entry.pack()
+
+# bouton de cryptage
+bouton_cryptage = Button(frame_selection_fichier, text="HASH")
+bouton_cryptage.pack()
 
 # Afficher
 window.mainloop()
