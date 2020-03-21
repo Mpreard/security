@@ -3,6 +3,7 @@ from tkinter.filedialog import askopenfilename
 import hashlib
 
 
+
 def select(event):
     selection_hash = choice.selection_get()
     affichage_hash.configure(text=selection_hash)
@@ -11,44 +12,39 @@ def buttonFonction():
     filename.set(askopenfilename(filetypes=FILETYPES))
 
 def hash(selection_hash):
-    print(selection_hash)
+    hash = selection_hash
 
 def hashfile():
-    if hash == 'SHA-1':
-        with open(filename,'rb') as file:
-            blk = file.read()    
-            SHA1.update(blk)
+    if affichage_hash['text'] == 'SHA-1':
+        with open(filename.get(),'rb') as file:
+            blk = file.read()
+            hash = hashlib.sha1(blk).hexdigest()
         file.close()
-        message_hash = SHA1.hexdigest()
-        print(message_hash)
-    if hash == 'SHA-256':
-        with open(filename,'rb') as file:
-            blk = file.read()    
-            SHA256.update(blk)
+        print(hash)
+    if affichage_hash['text'] == 'SHA-256':
+        with open(filename.get(),'rb') as file:
+            blk = file.read()
+            hash = hashlib.sha256(blk).hexdigest()
         file.close()
-        message_hash = SHA256.hexdigest()
-        print(message_hash)
-    if hash == 'SHA-512':
-        with open(filename,'rb') as file:
-            blk = file.read()    
-            SHA512.update(blk)
+        print(hash)
+    if affichage_hash['text'] == 'SHA-512':
+        with open(filename.get(),'rb') as file:
+            blk = file.read()
+            hash = hashlib.sha512(blk).hexdigest()
         file.close()
-        message_hash = SHA512.hexdigest()
-        print(message_hash)
-    if hash == 'MD5':
-        with open(filename,'rb') as file:
-            blk = file.read()    
-            MD5.update(blk)
+        print(hash)
+    if affichage_hash['text'] == 'MD5':
+        with open(filename.get(),'rb') as file:
+            blk = file.read()
+            hash = hashlib.md5(blk).hexdigest()
         file.close()
-        message_hash = MD5.hexdigest()
-        print(message_hash)
-    if hash == 'Blake2b':
-        with open(filename,'rb') as file:
-            blk = file.read()    
-            BLAKE.update(blk)
+        print(hash)
+    if affichage_hash['text'] == 'Blake2b':
+        with open(filename.get(),'rb') as file:
+            blk = file.read()
+            hash = hashlib.blake2b(blk).hexdigest()
         file.close()
-        message_hash = BLAKE.hexdigest()
-        print(message_hash)
+        print(hash)
 
 FILETYPES = [("text files", "*.txt")]
 
@@ -104,20 +100,6 @@ entry.pack()
 bouton_cryptage = Button(frame_selection_fichier, text="HASH", command=hashfile)
 bouton_cryptage.pack()
 
-# Création du HASH en SHA-1
-SHA1 = hashlib.sha1() 
-
-# Création du HASH en SHA-256
-SHA256 = hashlib.sha256()
-
-# Création du HASH en SHA-512
-SHA512 = hashlib.sha512()
-
-# Création du HASH en MD5
-MD5 = hashlib.md5()
-
-# Création du HASH en Blake2b
-BLAKE = hashlib.blake2b()
 
 # Afficher
 window.mainloop()
