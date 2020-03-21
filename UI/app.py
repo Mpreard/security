@@ -38,11 +38,11 @@ label_type.pack()
 
 # Choix du Hash
 choice = Listbox(frame_algo, width=10, height=5)
-choice.insert(1, "MDA")
-choice.insert(2, "SHA-1")
-choice.insert(3, "SHA256")
-choice.insert(4, "SHA512")
-choice.insert(5, "xxxHash64")
+choice.insert(1, "SHA-1")
+choice.insert(2, "SHA-256")
+choice.insert(3, "SHA-512")
+choice.insert(4, "MD5")
+choice.insert(5, "Blake2b")
 
 choice.bind('<<ListboxSelect>>', select)
 
@@ -51,7 +51,7 @@ choice.pack()
 affichage_hash = Label(frame_algo, text="")
 affichage_hash.pack()
 
-# bouton selection de fichie et affichage du chemin d'accès
+# bouton selection de fichier et affichage du chemin d'accès
 bouton_fichier = Button(frame_selection_fichier,
                         text="Select Files", command=buttonFonction)
 bouton_fichier.pack()
