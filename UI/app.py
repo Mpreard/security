@@ -10,6 +10,8 @@ def select(event):
 def buttonFonction():
     filename.set(askopenfilename(filetypes=FILETYPES))
 
+def test(bouton_cryptage):
+    print(filename)
 
 FILETYPES = [("text files", "*.txt")]
 
@@ -62,7 +64,7 @@ entry = Entry(frame_selection_fichier, textvariable=filename, width=70)
 entry.pack()
 
 # bouton de cryptage
-bouton_cryptage = Button(frame_selection_fichier, text="HASH")
+bouton_cryptage = Button(frame_selection_fichier, text="HASH", command=test)
 bouton_cryptage.pack()
 
 # Afficher

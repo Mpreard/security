@@ -7,10 +7,48 @@ def select(event):
     selection_hash = choice.selection_get()
     affichage_hash.configure(text=selection_hash)
 
-
 def buttonFonction():
     filename.set(askopenfilename(filetypes=FILETYPES))
 
+def hash(selection_hash):
+    print(selection_hash)
+
+def hashfile():
+    if hash == 'SHA-1':
+        with open(filename,'rb') as file:
+            blk = file.read()    
+            SHA1.update(blk)
+        file.close()
+        message_hash = SHA1.hexdigest()
+        print(message_hash)
+    if hash == 'SHA-256':
+        with open(filename,'rb') as file:
+            blk = file.read()    
+            SHA256.update(blk)
+        file.close()
+        message_hash = SHA256.hexdigest()
+        print(message_hash)
+    if hash == 'SHA-512':
+        with open(filename,'rb') as file:
+            blk = file.read()    
+            SHA512.update(blk)
+        file.close()
+        message_hash = SHA512.hexdigest()
+        print(message_hash)
+    if hash == 'MD5':
+        with open(filename,'rb') as file:
+            blk = file.read()    
+            MD5.update(blk)
+        file.close()
+        message_hash = MD5.hexdigest()
+        print(message_hash)
+    if hash == 'Blake2b':
+        with open(filename,'rb') as file:
+            blk = file.read()    
+            BLAKE.update(blk)
+        file.close()
+        message_hash = BLAKE.hexdigest()
+        print(message_hash)
 
 FILETYPES = [("text files", "*.txt")]
 
@@ -63,9 +101,8 @@ entry = Entry(frame_selection_fichier, textvariable=filename, width=70)
 entry.pack()
 
 # bouton de cryptage
-bouton_cryptage = Button(frame_selection_fichier, text="HASH")
+bouton_cryptage = Button(frame_selection_fichier, text="HASH", command=hashfile)
 bouton_cryptage.pack()
-
 
 # Création du HASH en SHA-1
 SHA1 = hashlib.sha1() 
@@ -81,43 +118,6 @@ MD5 = hashlib.md5()
 
 # Création du HASH en Blake2b
 BLAKE = hashlib.blake2b()
-
-def hashfile(bouton_cryptage):
-    if select == "SHA1":
-        with open(filename,'rb') as file:
-            blk = file.read()    
-            SHA1.update(blk)
-        file.close()
-        message_hache = SHA1.hexdigest()
-        print(message_hache)
-    if select == "SHA-256":
-        with open(filename,'rb') as file:
-            blk = file.read()    
-            SHA256.update(blk)
-        file.close()
-        message_hache = SHA256.hexdigest()
-        print(message_hache)
-    if select == "SHA-512":
-        with open(filename,'rb') as file:
-            blk = file.read()    
-            SHA512.update(blk)
-        file.close()
-        message_hache = SHA512.hexdigest()
-        print(message_hache)
-    if select == "MD5":
-        with open(filename,'rb') as file:
-            blk = file.read()    
-            MD5.update(blk)
-        file.close()
-        message_hache = MD5.hexdigest()
-        print(message_hache)
-    if select == "Blake2b":
-        with open(filename,'rb') as file:
-            blk = file.read()    
-            BLAKE.update(blk)
-        file.close()
-        message_hache = BLAKE.hexdigest()
-        print(message_hache)
 
 # Afficher
 window.mainloop()
