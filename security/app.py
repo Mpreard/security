@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.filedialog import askopenfilename
 import hashlib
+import Crypto.Cipher
 
 
 
@@ -53,22 +54,26 @@ window = Tk()
 window.title("e-Crypt")
 window.geometry("700x530")
 window.minsize(700, 530)
-window.config(background='#656767')
+window.config(background='#d6d6d6')
+
+# Menu fenêtre
+menu = Frame(window, borderwidth=3, bg='#d6d6d6')
+menu.pack()
+
+# Menu Clés
+cle = Menubutton(menu, text='Vos clés', width='20', borderwidth=2, activebackground='gray',relief = RAISED)
+cle.pack()
 
 # frame selection fichiers
-frame_selection_fichier = Frame(
-    window, relief='solid'
-)
+frame_selection_fichier = Frame(window, relief='solid')
 frame_selection_fichier.pack(side=RIGHT)
+
 # Frame algo
-frame_algo = Frame(
-    window, bg="#656767", bd=2, relief='solid')
+frame_algo = Frame(window, bg="#656767", bd=2, relief='solid')
 frame_algo.pack(side=LEFT)
 
-
 # Ajouter un premier texte
-label_type = Label(
-    frame_algo, text="Algorithm", font=("Arial", 10), bg='#656767', fg='#ffffff')
+label_type = Label(frame_algo, text="Algorithm", font=("Arial", 10), bg='#656767', fg='#ffffff')
 label_type.pack()
 
 # Choix du Hash
@@ -87,8 +92,7 @@ affichage_hash = Label(frame_algo, text="")
 affichage_hash.pack()
 
 # bouton selection de fichier et affichage du chemin d'accès
-bouton_fichier = Button(frame_selection_fichier,
-                        text="Select Files", command=buttonFonction)
+bouton_fichier = Button(frame_selection_fichier,text="Select Files", command=buttonFonction)
 bouton_fichier.pack()
 
 filename = StringVar(window)
