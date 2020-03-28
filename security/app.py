@@ -1,7 +1,9 @@
 from tkinter import *
 from tkinter.filedialog import askopenfilename
 import hashlib
-import Crypto.Cipher
+from Crypto.Cipher import AES
+from Crypto.Random import get_random_bytes
+import json
 
 # Enregistre le choix de la méthode de Hash
 def select(event):
@@ -42,7 +44,7 @@ def hashfile():
             hash = hashlib.md5(blk).hexdigest()
         file.close()
         mas.set(hash)
-    if affichage_hash['text'] == 'Blake2b':
+    if affichage_hash['text'] == 'Blake2B':
         with open(filename.get(),'rb') as file:
             blk = file.read()
             hash = hashlib.blake2b(blk).hexdigest()
@@ -56,9 +58,48 @@ def show_key():
     about_key.geometry("600x430")
     about_key.minsize(600, 430)
 
+    # Enregistre le choix de la taille de la clé AES
     def select_key(event):
         selection_key = choice_key.selection_get()
         result_key.configure(text=selection_key)
+
+    # Action pour generer la clé
+    def genera_key():
+        if result_key['text'] == '128 bits':
+            with open('table_key.json', 'a') as file:
+                key = get_random_bytes(16)
+                cipher = AES.new(key, AES.MODE_EAX)
+                cipher_text = str(cipher)
+                global pseudo
+                global password
+                pseudo = pseudo_entry.get()
+                password = password_entry.get()
+                x = ({'Personne':[{'Pseudo': pseudo, 'Password': password, 'Key 128 bits': cipher_text}]})
+                y = json.dumps(x, indent=1)
+                file.write(y)
+                file.close()
+        if result_key['text'] == '192 bits':
+            with open('table_key.json', 'a') as file:
+                key = get_random_bytes(24)
+                cipher = AES.new(key, AES.MODE_EAX)
+                cipher_text = str(cipher)
+                pseudo = pseudo_entry.get()
+                password = password_entry.get()
+                x = ({'Personne':[{'Pseudo': pseudo, 'Password': password, 'Key 192 bits': cipher_text}]})
+                y = json.dumps(x, indent=1)
+                file.write(y)
+                file.close()
+        if result_key['text'] == '256 bits':
+            with open('table_key.json','a') as file:
+                key = get_random_bytes(32)
+                cipher = AES.new(key, AES.MODE_EAX)
+                cipher_text = str(cipher)
+                pseudo = pseudo_entry.get()
+                password = password_entry.get()
+                x = ({'Personne':[{'Pseudo': pseudo, 'Password': password, 'Key 256 bits': cipher_text}]})
+                y = json.dumps(x, indent=1)
+                file.write(y)
+                file.close()
 
     # Titre
     titre_key= Label(about_key, text="Générer des clés", font=("Arial", 18), fg='#000000')
@@ -69,7 +110,7 @@ def show_key():
     frame_key.pack(side=LEFT)
 
     # Ajouter un premier texte
-    text_key = Label(frame_key, text="Taille des clés", font=("Arial", 10), bg='#D6D6D6', fg='#000000')
+    text_key = Label(frame_key, text="Taille des clés AES", font=("Arial", 10), bg='#D6D6D6', fg='#000000')
     text_key.pack()
 
     # Choix de la taille
@@ -83,9 +124,24 @@ def show_key():
     result_key = Label(frame_key, text="")
     result_key.pack()
 
+    # Frame Pseudo + MDP
+    frame_genera = Frame(about_key, relief='solid')
+    frame_genera.pack(side=LEFT, padx=110)
+
+    pseudo_text = Label(frame_genera, text="Votre pseudo")
+    pseudo_text.pack()
+    pseudo_entry = Entry(frame_genera, textvariable="", width=20)
+    pseudo_entry.pack()
+
+    
+    password_text = Label(frame_genera, text="Votre mot de passe")
+    password_text.pack()
+    password_entry = Entry(frame_genera, textvariable="", width=20)
+    password_entry.pack()
+
     # Bouton générer la clé
-    bouton_key = Button(about_key, text="Générer", width=10, height=3, font=("Arial", 10))
-    bouton_key.pack(pady=170)
+    bouton_key = Button(about_key, text="Générer", width=10, height=3, font=("Arial", 10), command=genera_key)
+    bouton_key.pack(pady=150, side=LEFT)
 
 
 # Action du menu Chiffrer un fichier
@@ -142,7 +198,7 @@ choice.insert(1, "SHA-1")
 choice.insert(2, "SHA-256")
 choice.insert(3, "SHA-512")
 choice.insert(4, "MD5")
-choice.insert(5, "Blake2b")
+choice.insert(5, "Blake2B")
 
 choice.bind('<<ListboxSelect>>', select)
 

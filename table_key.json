@@ -1,0 +1,25 @@
+{
+ "Personne": [
+  {
+   "Pseudo": "Valentin",
+   "Password": "123456789",
+   "Key 128 bits": "<Crypto.Cipher._mode_eax.EaxMode object at 0x03C80D60>"
+  }
+ ]
+}{
+ "Personne": [
+  {
+   "Pseudo": "Jean-Pierre",
+   "Password": "azerty",
+   "Key 192 bits": "<Crypto.Cipher._mode_eax.EaxMode object at 0x05AF0100>"
+  }
+ ]
+}{
+ "Personne": [
+  {
+   "Pseudo": "Dupont",
+   "Password": "labrador49",
+   "Key 256 bits": "<Crypto.Cipher._mode_eax.EaxMode object at 0x05AF06A0>"
+  }
+ ]
+}
