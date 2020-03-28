@@ -56,6 +56,10 @@ def show_key():
     about_key.geometry("600x430")
     about_key.minsize(600, 430)
 
+    def select_key(event):
+        selection_key = choice_key.selection_get()
+        result_key.configure(text=selection_key)
+
     # Titre
     titre_key= Label(about_key, text="Générer des clés", font=("Arial", 18), fg='#000000')
     titre_key.pack()
@@ -73,15 +77,12 @@ def show_key():
     choice_key.insert(1, "128 bits")
     choice_key.insert(2, "192 bits")
     choice_key.insert(3, "256 bits")
-
+    
     choice_key.bind('<<ListboxSelect>>', select_key)
     choice_key.pack()
     result_key = Label(frame_key, text="")
     result_key.pack()
 
-def select_key(event):
-    selection_key = choice_key.selection_get()
-    result_key.configure(text=selection_key)
 
 # Action du menu Chiffrer un fichier
 def show_chiff():
