@@ -23,41 +23,31 @@ def hashfile():
             blk = file.read()
             hash = hashlib.sha1(blk).hexdigest()
         file.close()
-        print(hash)
-        text_hash = Label(frame_selection_fichier, text=hash, font=("Arial", 10), fg='#000000')
-        text_hash.pack()
+        mas.set(hash)
     if affichage_hash['text'] == 'SHA-256':
         with open(filename.get(),'rb') as file:
             blk = file.read()
             hash = hashlib.sha256(blk).hexdigest()
         file.close()
-        print(hash)
-        text_hash = Label(frame_selection_fichier, text=hash, font=("Arial", 10), fg='#000000')
-        text_hash.pack()
+        mas.set(hash)
     if affichage_hash['text'] == 'SHA-512':
         with open(filename.get(),'rb') as file:
             blk = file.read()
             hash = hashlib.sha512(blk).hexdigest()
         file.close()
-        print(hash)
-        text_hash = Label(frame_selection_fichier, text=hash, font=("Arial", 10), fg='#000000')
-        text_hash.pack()
+        mas.set(hash)
     if affichage_hash['text'] == 'MD5':
         with open(filename.get(),'rb') as file:
             blk = file.read()
             hash = hashlib.md5(blk).hexdigest()
         file.close()
-        print(hash)
-        text_hash = Label(frame_selection_fichier, text=hash, font=("Arial", 10), fg='#000000')
-        text_hash.pack()
+        mas.set(hash)
     if affichage_hash['text'] == 'Blake2b':
         with open(filename.get(),'rb') as file:
             blk = file.read()
             hash = hashlib.blake2b(blk).hexdigest()
         file.close()
-        print(hash)
-        text_hash = Label(frame_selection_fichier, text=hash, font=("Arial", 10), fg='#000000')
-        text_hash.pack()
+        mas.set(hash)
 
 # Action du menu Générer des clés
 def show_key():
@@ -115,8 +105,8 @@ FILETYPES = [("text files", "*.txt")]
 # Création de la fenêtre
 window = Tk()
 window.title("e-Crypt")
-window.geometry("600x430")
-window.minsize(600, 430)
+window.geometry("1200x630")
+window.minsize(1200, 630)
 
 # Widgets
 mb = Menubutton(window,text="Menu")
@@ -173,6 +163,11 @@ entry.pack()
 # Bouton de cryptage
 bouton_cryptage = Button(frame_selection_fichier, text="Hasher", command=hashfile)
 bouton_cryptage.pack()
+
+# Instancier le résultat du Hash
+mas = StringVar()
+text_hash = Label(frame_selection_fichier, textvariable=mas, font=("Arial", 8), fg='#000000')
+text_hash.pack()
 
 # Afficher
 window.mainloop()
