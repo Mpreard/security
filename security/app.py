@@ -24,30 +24,40 @@ def hashfile():
             hash = hashlib.sha1(blk).hexdigest()
         file.close()
         print(hash)
+        text_hash = Label(frame_selection_fichier, text=hash, font=("Arial", 10), fg='#000000')
+        text_hash.pack()
     if affichage_hash['text'] == 'SHA-256':
         with open(filename.get(),'rb') as file:
             blk = file.read()
             hash = hashlib.sha256(blk).hexdigest()
         file.close()
         print(hash)
+        text_hash = Label(frame_selection_fichier, text=hash, font=("Arial", 10), fg='#000000')
+        text_hash.pack()
     if affichage_hash['text'] == 'SHA-512':
         with open(filename.get(),'rb') as file:
             blk = file.read()
             hash = hashlib.sha512(blk).hexdigest()
         file.close()
         print(hash)
+        text_hash = Label(frame_selection_fichier, text=hash, font=("Arial", 10), fg='#000000')
+        text_hash.pack()
     if affichage_hash['text'] == 'MD5':
         with open(filename.get(),'rb') as file:
             blk = file.read()
             hash = hashlib.md5(blk).hexdigest()
         file.close()
         print(hash)
+        text_hash = Label(frame_selection_fichier, text=hash, font=("Arial", 10), fg='#000000')
+        text_hash.pack()
     if affichage_hash['text'] == 'Blake2b':
         with open(filename.get(),'rb') as file:
             blk = file.read()
             hash = hashlib.blake2b(blk).hexdigest()
         file.close()
         print(hash)
+        text_hash = Label(frame_selection_fichier, text=hash, font=("Arial", 10), fg='#000000')
+        text_hash.pack()
 
 # Action du menu Générer des clés
 def show_key():
