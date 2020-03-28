@@ -56,12 +56,43 @@ def show_key():
     about_key.geometry("600x430")
     about_key.minsize(600, 430)
 
+    # Titre
+    titre_key= Label(about_key, text="Générer des clés", font=("Arial", 18), fg='#000000')
+    titre_key.pack()
+
+    # Frame clés
+    frame_key = Frame(about_key, bg="#D6D6D6", bd=2, relief='solid')
+    frame_key.pack(side=LEFT)
+
+    # Ajouter un premier texte
+    text_key = Label(frame_key, text="Taille des clés", font=("Arial", 10), bg='#D6D6D6', fg='#000000')
+    text_key.pack()
+
+    # Choix de la taille
+    choice_key = Listbox(frame_key, width=10, height=5)
+    choice_key.insert(1, "128 bits")
+    choice_key.insert(2, "192 bits")
+    choice_key.insert(3, "256 bits")
+
+    choice_key.bind('<<ListboxSelect>>', select_key)
+    choice_key.pack()
+    result_key = Label(frame_key, text="")
+    result_key.pack()
+
+def select_key(event):
+    selection_key = choice_key.selection_get()
+    result_key.configure(text=selection_key)
+
 # Action du menu Chiffrer un fichier
 def show_chiff():
     about_chiff = Toplevel(mb)
     about_chiff.title("Chiffrer un fichier")
     about_chiff.geometry("600x430")
     about_chiff.minsize(600, 430)
+
+    # Titre
+    titre_type= Label(about_chiff, text="Chiffrer un fichier", font=("Arial", 18), fg='#000000')
+    titre_type.pack()
 
 # Type de fichiers
 FILETYPES = [("text files", "*.txt")]
