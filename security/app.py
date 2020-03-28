@@ -83,6 +83,10 @@ def show_key():
     result_key = Label(frame_key, text="")
     result_key.pack()
 
+    # Bouton générer la clé
+    bouton_key = Button(about_key, text="Générer", width=10, height=3, font=("Arial", 10))
+    bouton_key.pack(pady=170)
+
 
 # Action du menu Chiffrer un fichier
 def show_chiff():
@@ -124,7 +128,7 @@ titre_type.pack(pady= 20)
 frame_selection_fichier = Frame(window, relief='solid')
 frame_selection_fichier.pack(side=RIGHT, padx=110)
 
-# Frame algo
+# Frame méthode
 frame_algo = Frame(window, bg="#D6D6D6", bd=2, relief='solid')
 frame_algo.pack(side=LEFT)
 
@@ -147,7 +151,7 @@ choice.pack()
 affichage_hash = Label(frame_algo, text="")
 affichage_hash.pack()
 
-# bouton selection de fichier et affichage du chemin d'accès
+# Bouton selection de fichier et affichage du chemin d'accès
 bouton_fichier = Button(frame_selection_fichier,text="Sélectionnez un fichier", command=buttonFonction)
 bouton_fichier.pack()
 
@@ -156,7 +160,7 @@ filename = StringVar(window)
 entry = Entry(frame_selection_fichier, textvariable=filename, width=50)
 entry.pack()
 
-# bouton de cryptage
+# Bouton de cryptage
 bouton_cryptage = Button(frame_selection_fichier, text="Hasher", command=hashfile)
 bouton_cryptage.pack()
 
