@@ -1,8 +1,12 @@
 from tkinter import *
 from tkinter.filedialog import askopenfilename
+from tkinter import ttk
 import hashlib
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
+import Crypto.Random as RNG
+from Crypto import Random
+
 import json
 
 # Enregistre le choix de la méthode de Hash
@@ -13,8 +17,6 @@ def select(event):
     affichage_hash.configure(text=selection_hash)
 
 # Enregistre le choix du sel ou non
-
-
 def sel():
     selection = str(var.get())
     affichage_sel.config(text=selection)
@@ -112,13 +114,11 @@ def hashfile():
             mas.set(hash)
 
 # Action du menu Générer des clés
-
-
 def show_key():
     about_key = Toplevel(mb)
     about_key.title("Générer des clés")
-    about_key.geometry("600x430")
-    about_key.minsize(600, 430)
+    about_key.geometry("800x430")
+    about_key.minsize(800, 430)
 
     # Enregistre le choix de la taille de la clé AES
     def select_key(event):
@@ -130,38 +130,28 @@ def show_key():
         if result_key['text'] == '128 bits':
             with open('table_key.json', 'a') as file:
                 key = get_random_bytes(16)
-                cipher = AES.new(key, AES.MODE_EAX)
-                cipher_text = str(cipher)
+                nbr_key = str(key)
                 global pseudo
                 global password
                 pseudo = pseudo_entry.get()
                 password = password_entry.get()
-                x = ({'Personne': [
-                     {'Pseudo': pseudo, 'Password': password, 'Key 128 bits': cipher_text}]})
+                x = {'Pseudo': pseudo, 'Password': password, 'Key 128 bits': nbr_key}
                 y = json.dumps(x, indent=1)
                 file.write(y)
                 file.close()
         if result_key['text'] == '192 bits':
             with open('table_key.json', 'a') as file:
                 key = get_random_bytes(24)
-                cipher = AES.new(key, AES.MODE_EAX)
-                cipher_text = str(cipher)
-                pseudo = pseudo_entry.get()
-                password = password_entry.get()
-                x = ({'Personne': [
-                     {'Pseudo': pseudo, 'Password': password, 'Key 192 bits': cipher_text}]})
+                nbr_key = str(key)
+                x = {'Pseudo': pseudo, 'Password': password, 'Key 192 bits': nbr_key}
                 y = json.dumps(x, indent=1)
                 file.write(y)
                 file.close()
         if result_key['text'] == '256 bits':
             with open('table_key.json', 'a') as file:
                 key = get_random_bytes(32)
-                cipher = AES.new(key, AES.MODE_EAX)
-                cipher_text = str(cipher)
-                pseudo = pseudo_entry.get()
-                password = password_entry.get()
-                x = ({'Personne': [
-                     {'Pseudo': pseudo, 'Password': password, 'Key 256 bits': cipher_text}]})
+                nbr_key = str(key)
+                x = {'Pseudo': pseudo, 'Password': password, 'Key 256 bits': nbr_key}
                 y = json.dumps(x, indent=1)
                 file.write(y)
                 file.close()
@@ -210,6 +200,9 @@ def show_key():
                         height=3, font=("Arial", 10), command=genera_key)
     bouton_key.pack(pady=150, side=LEFT)
 
+    # Tableau
+    frame_table = Frame(about_key, relief='solid')
+    frame_table.pack()
 
 # Action du menu Chiffrer un fichier
 def show_chiff():

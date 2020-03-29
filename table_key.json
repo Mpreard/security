@@ -1,25 +1,13 @@
 {
- "Personne": [
-  {
-   "Pseudo": "Valentin",
-   "Password": "123456789",
-   "Key 128 bits": "<Crypto.Cipher._mode_eax.EaxMode object at 0x03C80D60>"
-  }
- ]
+ "Pseudo": "aaa",
+ "Password": "aa",
+ "Key 128 bits": "b'\\x1cW\\xe1@_\\xbd\\xd0@\\xe0q\\x1c0\\x88`\\x910'"
 }{
- "Personne": [
-  {
-   "Pseudo": "Jean-Pierre",
-   "Password": "azerty",
-   "Key 192 bits": "<Crypto.Cipher._mode_eax.EaxMode object at 0x05AF0100>"
-  }
- ]
+ "Pseudo": "aaa",
+ "Password": "aa",
+ "Key 128 bits": "b'3\\xbe\\x0c5\\xef\\xfd\\xaa9\\x0c\\xb5nO\\xa8SN\\x0b'"
 }{
- "Personne": [
-  {
-   "Pseudo": "Dupont",
-   "Password": "labrador49",
-   "Key 256 bits": "<Crypto.Cipher._mode_eax.EaxMode object at 0x05AF06A0>"
-  }
- ]
+ "Pseudo": "aaa",
+ "Password": "aa",
+ "Key 128 bits": "b'\\xdb\\xb6d\\x14\\xa8i\\x0fL\\x80\\xa9\\xfb\\xa3\\xd6Xs\\xa6'"
 }
