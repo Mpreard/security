@@ -312,5 +312,11 @@ R2.pack()
 affichage_sel = Label(frame_algo, text="")
 affichage_sel.pack()
 
+frame_nom = Frame(frame_selection_fichier)
+frame_nom.pack()
+Name_label = Label(
+    frame_nom, text="Valentin Morin & Maxime Préard", font=("Arial", 7))
+Name_label.pack()
+
 # Afficher
 window.mainloop()
