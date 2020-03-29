@@ -27,36 +27,88 @@ def buttonFonction():
 
 # Méthode de Hash
 def hashfile():
-    if affichage_hash['text'] == 'SHA-1':
-        with open(filename.get(), 'rb') as file:
-            blk = file.read()
-            hash = hashlib.sha1(blk).hexdigest()
-        file.close()
-        mas.set(hash)
-    if affichage_hash['text'] == 'SHA-256':
-        with open(filename.get(), 'rb') as file:
-            blk = file.read()
-            hash = hashlib.sha256(blk).hexdigest()
-        file.close()
-        mas.set(hash)
-    if affichage_hash['text'] == 'SHA-512':
-        with open(filename.get(), 'rb') as file:
-            blk = file.read()
-            hash = hashlib.sha512(blk).hexdigest()
-        file.close()
-        mas.set(hash)
-    if affichage_hash['text'] == 'MD5':
-        with open(filename.get(), 'rb') as file:
-            blk = file.read()
-            hash = hashlib.md5(blk).hexdigest()
-        file.close()
-        mas.set(hash)
-    if affichage_hash['text'] == 'Blake2B':
-        with open(filename.get(), 'rb') as file:
-            blk = file.read()
-            hash = hashlib.blake2b(blk).hexdigest()
-        file.close()
-        mas.set(hash)
+    if affichage_sel['text'] == "Sans sel":
+        if affichage_hash['text'] == 'SHA-1':
+            with open(filename.get(), 'rb') as file:
+                blk = file.read()
+                hash = hashlib.sha1(blk).hexdigest()
+            file.close()
+            mas.set(hash)
+        if affichage_hash['text'] == 'SHA-256':
+            with open(filename.get(), 'rb') as file:
+                blk = file.read()
+                hash = hashlib.sha256(blk).hexdigest()
+            file.close()
+            mas.set(hash)
+        if affichage_hash['text'] == 'SHA-512':
+            with open(filename.get(), 'rb') as file:
+                blk = file.read()
+                hash = hashlib.sha512(blk).hexdigest()
+            file.close()
+            mas.set(hash)
+        if affichage_hash['text'] == 'MD5':
+            with open(filename.get(), 'rb') as file:
+                blk = file.read()
+                hash = hashlib.md5(blk).hexdigest()
+            file.close()
+            mas.set(hash)
+        if affichage_hash['text'] == 'Blake2B':
+            with open(filename.get(), 'rb') as file:
+                blk = file.read()
+                hash = hashlib.blake2b(blk).hexdigest()
+            file.close()
+            mas.set(hash)
+    else:
+        if affichage_hash['text'] == 'SHA-1':
+            with open(filename.get(), 'a') as file:
+                sel = entry_sel.get()
+                file.write(sel)
+            file.close()
+            with open(filename.get(), 'rb') as file:
+                blk = file.read()
+                hash = hashlib.sha1(blk).hexdigest()
+            file.close()
+            mas.set(hash)
+        if affichage_hash['text'] == 'SHA-256':
+            with open(filename.get(), 'a') as file:
+                sel = entry_sel.get()
+                file.write(sel)
+            file.close()
+            with open(filename.get(), 'rb') as file:
+                blk = file.read()
+                hash = hashlib.sha256(blk).hexdigest()
+            file.close()
+            mas.set(hash)
+        if affichage_hash['text'] == 'SHA-512':
+            with open(filename.get(), 'a') as file:
+                sel = entry_sel.get()
+                file.write(sel)
+            file.close()
+            with open(filename.get(), 'rb') as file:
+                blk = file.read()
+                hash = hashlib.sha512(blk).hexdigest()
+            file.close()
+            mas.set(hash)
+        if affichage_hash['text'] == 'MD5':
+            with open(filename.get(), 'a') as file:
+                sel = entry_sel.get()
+                file.write(sel)
+            file.close()
+            with open(filename.get(), 'rb') as file:
+                blk = file.read()
+                hash = hashlib.md5(blk).hexdigest()
+            file.close()
+            mas.set(hash)
+        if affichage_hash['text'] == 'Blake2B':
+            with open(filename.get(), 'a') as file:
+                sel = entry_sel.get()
+                file.write(sel)
+            file.close()
+            with open(filename.get(), 'rb') as file:
+                blk = file.read()
+                hash = hashlib.blake2b(blk).hexdigest()
+            file.close()
+            mas.set(hash)
 
 # Action du menu Générer des clés
 
@@ -234,6 +286,14 @@ filename = StringVar(window)
 
 entry = Entry(frame_selection_fichier, textvariable=filename, width=50)
 entry.pack()
+
+
+# Insérer le sel
+label_sel = Label(frame_selection_fichier, text="Entrez votre sel (optionnel)")
+entry_sel = Entry(frame_selection_fichier)
+label_sel.pack()
+entry_sel.pack()
+
 
 # Bouton de cryptage
 bouton_cryptage = Button(frame_selection_fichier,
