@@ -6,52 +6,61 @@ from Crypto.Random import get_random_bytes
 import json
 
 # Enregistre le choix de la méthode de Hash
+
+
 def select(event):
     selection_hash = choice.selection_get()
     affichage_hash.configure(text=selection_hash)
+
+# Enregistre le choix du sel ou non
+
+
+def sel():
+    selection = str(var.get())
+    affichage_sel.config(text=selection)
+
 
 # Action pour sélectionner le fichier
 def buttonFonction():
     filename.set(askopenfilename(filetypes=FILETYPES))
 
-# Selectionner le choix du Hash
-def hash(selection_hash):
-    hash = selection_hash
 
 # Méthode de Hash
 def hashfile():
     if affichage_hash['text'] == 'SHA-1':
-        with open(filename.get(),'rb') as file:
+        with open(filename.get(), 'rb') as file:
             blk = file.read()
             hash = hashlib.sha1(blk).hexdigest()
         file.close()
         mas.set(hash)
     if affichage_hash['text'] == 'SHA-256':
-        with open(filename.get(),'rb') as file:
+        with open(filename.get(), 'rb') as file:
             blk = file.read()
             hash = hashlib.sha256(blk).hexdigest()
         file.close()
         mas.set(hash)
     if affichage_hash['text'] == 'SHA-512':
-        with open(filename.get(),'rb') as file:
+        with open(filename.get(), 'rb') as file:
             blk = file.read()
             hash = hashlib.sha512(blk).hexdigest()
         file.close()
         mas.set(hash)
     if affichage_hash['text'] == 'MD5':
-        with open(filename.get(),'rb') as file:
+        with open(filename.get(), 'rb') as file:
             blk = file.read()
             hash = hashlib.md5(blk).hexdigest()
         file.close()
         mas.set(hash)
     if affichage_hash['text'] == 'Blake2B':
-        with open(filename.get(),'rb') as file:
+        with open(filename.get(), 'rb') as file:
             blk = file.read()
             hash = hashlib.blake2b(blk).hexdigest()
         file.close()
         mas.set(hash)
 
 # Action du menu Générer des clés
+
+
 def show_key():
     about_key = Toplevel(mb)
     about_key.title("Générer des clés")
@@ -74,7 +83,8 @@ def show_key():
                 global password
                 pseudo = pseudo_entry.get()
                 password = password_entry.get()
-                x = ({'Personne':[{'Pseudo': pseudo, 'Password': password, 'Key 128 bits': cipher_text}]})
+                x = ({'Personne': [
+                     {'Pseudo': pseudo, 'Password': password, 'Key 128 bits': cipher_text}]})
                 y = json.dumps(x, indent=1)
                 file.write(y)
                 file.close()
@@ -85,24 +95,27 @@ def show_key():
                 cipher_text = str(cipher)
                 pseudo = pseudo_entry.get()
                 password = password_entry.get()
-                x = ({'Personne':[{'Pseudo': pseudo, 'Password': password, 'Key 192 bits': cipher_text}]})
+                x = ({'Personne': [
+                     {'Pseudo': pseudo, 'Password': password, 'Key 192 bits': cipher_text}]})
                 y = json.dumps(x, indent=1)
                 file.write(y)
                 file.close()
         if result_key['text'] == '256 bits':
-            with open('table_key.json','a') as file:
+            with open('table_key.json', 'a') as file:
                 key = get_random_bytes(32)
                 cipher = AES.new(key, AES.MODE_EAX)
                 cipher_text = str(cipher)
                 pseudo = pseudo_entry.get()
                 password = password_entry.get()
-                x = ({'Personne':[{'Pseudo': pseudo, 'Password': password, 'Key 256 bits': cipher_text}]})
+                x = ({'Personne': [
+                     {'Pseudo': pseudo, 'Password': password, 'Key 256 bits': cipher_text}]})
                 y = json.dumps(x, indent=1)
                 file.write(y)
                 file.close()
 
     # Titre
-    titre_key= Label(about_key, text="Générer des clés", font=("Arial", 18), fg='#000000')
+    titre_key = Label(about_key, text="Générer des clés",
+                      font=("Arial", 18), fg='#000000')
     titre_key.pack()
 
     # Frame clés
@@ -110,7 +123,8 @@ def show_key():
     frame_key.pack(side=LEFT)
 
     # Ajouter un premier texte
-    text_key = Label(frame_key, text="Taille des clés AES", font=("Arial", 10), bg='#D6D6D6', fg='#000000')
+    text_key = Label(frame_key, text="Taille des clés AES",
+                     font=("Arial", 10), bg='#D6D6D6', fg='#000000')
     text_key.pack()
 
     # Choix de la taille
@@ -118,7 +132,7 @@ def show_key():
     choice_key.insert(1, "128 bits")
     choice_key.insert(2, "192 bits")
     choice_key.insert(3, "256 bits")
-    
+
     choice_key.bind('<<ListboxSelect>>', select_key)
     choice_key.pack()
     result_key = Label(frame_key, text="")
@@ -133,14 +147,14 @@ def show_key():
     pseudo_entry = Entry(frame_genera, textvariable="", width=20)
     pseudo_entry.pack()
 
-    
     password_text = Label(frame_genera, text="Votre mot de passe")
     password_text.pack()
     password_entry = Entry(frame_genera, textvariable="", width=20)
     password_entry.pack()
 
     # Bouton générer la clé
-    bouton_key = Button(about_key, text="Générer", width=10, height=3, font=("Arial", 10), command=genera_key)
+    bouton_key = Button(about_key, text="Générer", width=10,
+                        height=3, font=("Arial", 10), command=genera_key)
     bouton_key.pack(pady=150, side=LEFT)
 
 
@@ -152,8 +166,10 @@ def show_chiff():
     about_chiff.minsize(600, 430)
 
     # Titre
-    titre_type= Label(about_chiff, text="Chiffrer un fichier", font=("Arial", 18), fg='#000000')
+    titre_type = Label(about_chiff, text="Chiffrer un fichier",
+                       font=("Arial", 18), fg='#000000')
     titre_type.pack()
+
 
 # Type de fichiers
 FILETYPES = [("text files", "*.txt")]
@@ -165,7 +181,7 @@ window.geometry("1200x630")
 window.minsize(1200, 630)
 
 # Widgets
-mb = Menubutton(window,text="Menu")
+mb = Menubutton(window, text="Menu")
 mb.menu = Menu(mb, tearoff=0)
 mb["menu"] = mb.menu
 mb.config(background='#D6D6D6', fg='#000000')
@@ -177,8 +193,9 @@ mb.menu.add_command(label="Quitter", command=mb.quit)
 mb.pack(side=TOP)
 
 # Titre Fenêtre
-titre_type= Label(window, text="Hasher un fichier", font=("Arial", 18), fg='#000000')
-titre_type.pack(pady= 20)
+titre_type = Label(window, text="Hasher un fichier",
+                   font=("Arial", 18), fg='#000000')
+titre_type.pack(pady=20)
 
 # Frame selection fichiers
 frame_selection_fichier = Frame(window, relief='solid')
@@ -189,7 +206,8 @@ frame_algo = Frame(window, bg="#D6D6D6", bd=2, relief='solid')
 frame_algo.pack(side=LEFT)
 
 # Ajouter un premier texte
-label_type = Label(frame_algo, text="Methode", font=("Arial", 10), bg='#D6D6D6', fg='#000000')
+label_type = Label(frame_algo, text="Methode", font=(
+    "Arial", 10), bg='#D6D6D6', fg='#000000')
 label_type.pack()
 
 # Choix du Hash
@@ -208,7 +226,8 @@ affichage_hash = Label(frame_algo, text="")
 affichage_hash.pack()
 
 # Bouton selection de fichier et affichage du chemin d'accès
-bouton_fichier = Button(frame_selection_fichier,text="Sélectionnez un fichier", command=buttonFonction)
+bouton_fichier = Button(frame_selection_fichier,
+                        text="Sélectionnez un fichier", command=buttonFonction)
 bouton_fichier.pack()
 
 filename = StringVar(window)
@@ -217,13 +236,27 @@ entry = Entry(frame_selection_fichier, textvariable=filename, width=50)
 entry.pack()
 
 # Bouton de cryptage
-bouton_cryptage = Button(frame_selection_fichier, text="Hasher", command=hashfile)
+bouton_cryptage = Button(frame_selection_fichier,
+                         text="Hasher", command=hashfile)
 bouton_cryptage.pack()
 
 # Instancier le résultat du Hash
 mas = StringVar()
-text_hash = Label(frame_selection_fichier, textvariable=mas, font=("Arial", 8), fg='#000000')
+text_hash = Entry(frame_selection_fichier, textvariable=mas, width=150,
+                  font=("Arial", 8), fg='#000000')
 text_hash.pack()
+
+# Radio button sel
+var = StringVar()
+R1 = Radiobutton(frame_algo, text="Avec sel", variable=var, value="Avec sel",
+                 command=sel,  bg='#D6D6D6')
+R1.pack()
+R2 = Radiobutton(frame_algo, text="Sans sel", variable=var, value="Sans sel",
+                 command=sel,  bg='#D6D6D6')
+R2.pack()
+
+affichage_sel = Label(frame_algo, text="")
+affichage_sel.pack()
 
 # Afficher
 window.mainloop()
