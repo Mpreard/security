@@ -27,6 +27,7 @@ def buttonFonction():
 
 # Méthode de Hash
 def hashfile():
+    check_sel = ""
     if affichage_sel['text'] == "Sans sel":
         if affichage_hash['text'] == 'SHA-1':
             with open(filename.get(), 'rb') as file:
@@ -58,7 +59,7 @@ def hashfile():
                 hash = hashlib.blake2b(blk).hexdigest()
             file.close()
             mas.set(hash)
-    else:
+    if check_sel != entry_sel.get():
         if affichage_hash['text'] == 'SHA-1':
             with open(filename.get(), 'a') as file:
                 sel = entry_sel.get()
