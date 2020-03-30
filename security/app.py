@@ -17,6 +17,8 @@ def select(event):
     affichage_hash.configure(text=selection_hash)
 
 # Enregistre le choix du sel ou non
+
+
 def sel():
     selection = str(var.get())
     affichage_sel.config(text=selection)
@@ -114,6 +116,8 @@ def hashfile():
             mas.set(hash)
 
 # Action du menu Générer des clés
+
+
 def show_key():
     about_key = Toplevel(mb)
     about_key.title("Générer des clés")
@@ -135,7 +139,8 @@ def show_key():
                 global password
                 pseudo = pseudo_entry.get()
                 password = password_entry.get()
-                x = {'Pseudo': pseudo, 'Password': password, 'Key 128 bits': nbr_key}
+                x = {'Pseudo': pseudo, 'Password': password,
+                     'Key 128 bits': nbr_key}
                 y = json.dumps(x, indent=1)
                 file.write(y)
                 file.close()
@@ -143,7 +148,8 @@ def show_key():
             with open('table_key.json', 'a') as file:
                 key = get_random_bytes(24)
                 nbr_key = str(key)
-                x = {'Pseudo': pseudo, 'Password': password, 'Key 192 bits': nbr_key}
+                x = {'Pseudo': pseudo, 'Password': password,
+                     'Key 192 bits': nbr_key}
                 y = json.dumps(x, indent=1)
                 file.write(y)
                 file.close()
@@ -151,7 +157,8 @@ def show_key():
             with open('table_key.json', 'a') as file:
                 key = get_random_bytes(32)
                 nbr_key = str(key)
-                x = {'Pseudo': pseudo, 'Password': password, 'Key 256 bits': nbr_key}
+                x = {'Pseudo': pseudo, 'Password': password,
+                     'Key 256 bits': nbr_key}
                 y = json.dumps(x, indent=1)
                 file.write(y)
                 file.close()
@@ -205,6 +212,8 @@ def show_key():
     frame_table.pack()
 
 # Action du menu Chiffrer un fichier
+
+
 def show_chiff():
     about_chiff = Toplevel(mb)
     about_chiff.title("Chiffrer un fichier")
@@ -278,7 +287,7 @@ bouton_fichier.pack()
 
 filename = StringVar(window)
 
-entry = Entry(frame_selection_fichier, textvariable=filename, width=50)
+entry = Entry(frame_selection_fichier, textvariable=filename, width=100)
 entry.pack()
 
 
