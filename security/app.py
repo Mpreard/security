@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter.filedialog import askopenfilename
 from tkinter import ttk
 import hashlib
-from cryptography.fernet import Fernet, MultiFernet
+from cryptography.fernet import Fernet
 import json
 
 # Enregistre le choix de la méthode de Hash
@@ -22,7 +22,7 @@ def buttonFonction():
 # Méthode de Hash
 def hashfile():
     check_sel = ""
-    if affichage_sel['text'] == "Sans sel":
+    if affichage_sel['text'] == "Sans sel": # Sans Salage
         if affichage_hash['text'] == 'SHA-1':
             with open(filename.get(), 'rb') as file:
                 blk = file.read()
@@ -53,7 +53,7 @@ def hashfile():
                 hash = hashlib.blake2b(blk).hexdigest()
             file.close()
             mas.set(hash)
-    if check_sel != entry_sel.get():
+    if check_sel != entry_sel.get(): # Avec Salage
         if affichage_hash['text'] == 'SHA-1':
             with open(filename.get(), 'a') as file:
                 sel = entry_sel.get()
@@ -155,7 +155,7 @@ def show_key():
                 table.insert('',END,values=(pseudo, nbr_key))
                 file.close()
 
-    # Action supprimer une clé
+    # Action pour supprimer une clé
     def delete_key():
         select_table = table.selection()
         for selected_item in select_table:
@@ -169,15 +169,15 @@ def show_key():
                 file.close()
         
 
-    # Titre
+    # Titre "Générer des clés"
     titre_key = Label(about_key, text="Générer des clés",font=("Arial", 18), fg='#000000')
     titre_key.pack()
 
-    # Frame clés
+    # Frame des clés
     frame_key = Frame(about_key, bg="#D6D6D6", bd=2, relief='solid')
     frame_key.pack(side=LEFT)
 
-    # Ajouter un premier texte
+    # Texte "Taille des clés AES" de la listebox
     text_key = Label(frame_key, text="Taille des clés AES",font=("Arial", 10), bg='#D6D6D6', fg='#000000')
     text_key.pack()
 
@@ -191,7 +191,7 @@ def show_key():
     result_key = Label(frame_key, text="")
     result_key.pack()
 
-    # Frame Pseudo + MDP
+    # Frame Pseudo + mot de passe
     frame_genera = Frame(about_key, relief='solid')
     frame_genera.pack(side=LEFT, padx=110)
 
@@ -209,7 +209,7 @@ def show_key():
     bouton_key = Button(about_key, text="Générer", width=10,height=3, font=("Arial", 10), command=genera_key)
     bouton_key.pack(pady=150, side=LEFT)
 
-    # Tableau
+    # Tableau affiche les clés
     frame_table = Frame(about_key, relief='solid')
     frame_table.pack()
     table=ttk.Treeview(about_key, show="headings")
@@ -230,6 +230,12 @@ def show_key():
     supprime_key = Button(about_key, text="Supprimer", width=10,height=3, font=("Arial", 10), command=delete_key)
     supprime_key.pack(side=TOP)
 
+    # Frame Texte NOM et PRENOM
+    frame_nom = Frame(about_key)
+    frame_nom.pack()
+    Name_label = Label(frame_nom, text="Valentin Morin & Maxime Préard", font=("Arial", 7))
+    Name_label.pack()
+
 # Action du menu Chiffrer un fichier
 def show_chiff():
     about_chiff = Toplevel(mb)
@@ -240,11 +246,11 @@ def show_chiff():
     def buttonFonction2():
         filename2.set(askopenfilename(filetypes=FILETYPES))
 
-    # Titre
+    # Titre "Chiffrer / Déchiffrer un fichier"
     titre_type = Label(about_chiff, text="Chiffrer / Déchiffrer un fichier", font=("Arial", 18), fg='#000000')
     titre_type.pack()
 
-    # Tableau
+    # Tableau pour afficher les clés
     frame_table = Frame(about_chiff, relief='solid')
     frame_table.pack()
     demande_type = Label(about_chiff, text="Sélectionnez votre clé", font=("Arial", 10), fg='#000000')
@@ -263,7 +269,7 @@ def show_chiff():
         table.pack()
     f.close()
 
-    # Bouton chiffrement
+    # Bouton de chiffrement
     def btn_chiffr():
         with open('table_key.json', 'r') as f:
             data = json.load(f)
@@ -278,7 +284,23 @@ def show_chiff():
                         token = final_key.encrypt(file)
                     file.close()
 
-    # Frame Select fichier chiffrement
+    # Bouton de déchiffrement
+    def btn_dechiffr():
+        with open('table_key.json', 'r') as f:
+            data = json.load(f)
+            verif = (data['Password'])
+            entry_verif = password_entry.get()
+            if entry_verif == verif:
+                select_table = table.selection()
+                for selected_item in select_table:
+                    select_key = selected_item('Key')
+                    final_key = select_key.encode()
+                    with open(filename2.get(), 'rb') as file:
+                        token = final_key.decrypt(file)
+                    file.close()
+
+
+    # Frame sélectionner un fichier chiffrement
     frame_select_fic = Frame(about_chiff, relief='solid')
     frame_select_fic.pack(side=BOTTOM, ipady=20)
     bouton_fichier = Button(frame_select_fic, text="Sélectionnez un fichier", command=buttonFonction2)
@@ -289,13 +311,13 @@ def show_chiff():
     entry2 = Entry(frame_select_fic, textvariable=filename2, width=100)
     entry2.pack()
 
-    # Frame + Bouton chiffre / déchiffre
+    # Frame + Bouton chiffrement / déchiffrement
     frame_chiff = Frame(about_chiff, relief='solid')
     frame_chiff.pack()
     button_chiffrer = Button(frame_chiff, text="Chiffrer", width=10,height=2, font=("Arial", 10), command=btn_chiffr)
     button_chiffrer.pack(side=LEFT)
 
-    button_dechiffrer = Button(frame_chiff, text="Déchiffrer", width=10,height=2, font=("Arial", 10))
+    button_dechiffrer = Button(frame_chiff, text="Déchiffrer", width=10,height=2, font=("Arial", 10), command= btn_dechiffr)
     button_dechiffrer.pack(side=RIGHT)
 
     # Mot de passe
@@ -305,6 +327,12 @@ def show_chiff():
     password_text.pack()
     password_entry = Entry(frame_pass, textvariable="", width=20)
     password_entry.pack()
+
+    # Frame Texte NOM et PRENOM
+    frame_nom = Frame(frame_pass)
+    frame_nom.pack()
+    Name_label = Label(frame_nom, text="Valentin Morin & Maxime Préard", font=("Arial", 7))
+    Name_label.pack()
 
 
 # Type de fichiers
@@ -316,7 +344,7 @@ window.title("e-Crypt")
 window.geometry("1200x630")
 window.minsize(1200, 630)
 
-# Widgets
+# Widgets Menu de l'interface
 mb = Menubutton(window, text="Menu")
 mb.menu = Menu(mb, tearoff=0)
 mb["menu"] = mb.menu
@@ -374,9 +402,9 @@ entry_sel = Entry(frame_selection_fichier)
 label_sel.pack()
 entry_sel.pack()
 
-# Bouton de cryptage
-bouton_cryptage = Button(frame_selection_fichier, text="Hasher", command=hashfile)
-bouton_cryptage.pack()
+# Bouton de hashage
+bouton_hash = Button(frame_selection_fichier, text="Hasher", command=hashfile)
+bouton_hash.pack()
 
 # Instancier le résultat du Hash
 mas = StringVar()
@@ -393,10 +421,11 @@ R2.pack()
 affichage_sel = Label(frame_algo, text="")
 affichage_sel.pack()
 
+# Frame Texte NOM et PRENOM
 frame_nom = Frame(frame_selection_fichier)
 frame_nom.pack()
 Name_label = Label(frame_nom, text="Valentin Morin & Maxime Préard", font=("Arial", 7))
 Name_label.pack()
 
-# Afficher
+# Afficher la fenêtre principale
 window.mainloop()
