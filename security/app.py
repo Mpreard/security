@@ -209,7 +209,7 @@ def show_key():
     bouton_key = Button(about_key, text="Générer", width=10,height=3, font=("Arial", 10), command=genera_key)
     bouton_key.pack(pady=150, side=LEFT)
 
-    # Tableau affiche les clés
+    # Tableau affiche les clés au lancement
     frame_table = Frame(about_key, relief='solid')
     frame_table.pack()
     table=ttk.Treeview(about_key, show="headings")
@@ -220,11 +220,11 @@ def show_key():
     table.heading(1, text="Pseudo",anchor=W)
     table.heading(2, text="Key",anchor=W)
     selected_item = table.selection()
+    table.pack()
     with open('table_key.json') as f:
         data = json.load(f)
         table.insert('',END,values=(data['Pseudo'],data['Key']))
-        table.pack()
-        f.close()
+    f.close()
 
     # Bouton Supprimer
     supprime_key = Button(about_key, text="Supprimer", width=10,height=3, font=("Arial", 10), command=delete_key)
@@ -263,10 +263,10 @@ def show_chiff():
     table.heading(1, text="Pseudo",anchor=W)
     table.heading(2, text="Key",anchor=W)
     selected_item = table.selection()
+    table.pack()
     with open('table_key.json') as f:
         data = json.load(f)
         table.insert('',END,values=(data['Pseudo'],data['Key']))
-        table.pack()
     f.close()
 
     # Bouton de chiffrement
@@ -283,6 +283,7 @@ def show_chiff():
                     with open(filename2.get(), 'rb') as file:
                         token = final_key.encrypt(file)
                     file.close()
+        f.close()
 
     # Bouton de déchiffrement
     def btn_dechiffr():
@@ -298,6 +299,7 @@ def show_chiff():
                     with open(filename2.get(), 'rb') as file:
                         token = final_key.decrypt(file)
                     file.close()
+        f.close()
 
 
     # Frame sélectionner un fichier chiffrement
@@ -333,7 +335,6 @@ def show_chiff():
     frame_nom.pack()
     Name_label = Label(frame_nom, text="Valentin Morin & Maxime Préard", font=("Arial", 7))
     Name_label.pack()
-
 
 # Type de fichiers
 FILETYPES = [("text files", "*.txt")]
